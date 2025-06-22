@@ -3,46 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestor de Inventario</title>
+    <title>Stockify - Gestor de Inventario</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="/static/style.css">
+
     <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        body { 
-            font-family: 'Inter', sans-serif; 
-            background-color: #f7f3ff; 
-        }
-        .nav-link.active {
-            background-color: #ede9fe; 
-            color: #6d28d9; 
-            font-weight: 600;
-        }
-        .nav-link.active i {
-            color: #6d28d9; 
-        }
-        .submenu { transition: max-height 0.3s ease-in-out; }
-    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="h-full">
 
-<div class="flex h-screen">
-    <!-- Barra de Navegación Lateral "Cute" -->
-    <aside class="w-64 flex-shrink-0 bg-white flex flex-col p-4">
-        <div class="h-16 flex items-center justify-center text-2xl font-bold text-violet-700">
-            <span>Mi Tiendita</span>
+<div class="flex h-screen bg-slate-50">
+    <aside class="w-64 flex-shrink-0 bg-white flex flex-col p-4 border-r border-slate-200">
+        <div class="h-16 flex items-center justify-center text-2xl font-bold tracking-wider">
+            <span class="logo-text">Stockify</span>
         </div>
         <nav class="flex-1 mt-6 space-y-2">
             <a href="#" data-view="dashboard" class="nav-link flex items-center px-4 py-3 text-slate-600 hover:bg-violet-50 rounded-lg transition-colors duration-200">
-                <i data-lucide="home" class="mr-3 h-5 w-5"></i> Inicio
+                <i data-lucide="layout-dashboard" class="mr-3 h-5 w-5"></i> Dashboard
             </a>
             
             <div>
-                <button id="productos-toggle" class="w-full nav-link flex items-center justify-between px-4 py-3 text-slate-600 hover:bg-violet-50 rounded-lg transition-colors duration-200">
+                <button id="productos-toggle"  class="w-full nav-link flex items-center justify-between px-4 py-3 text-slate-600 hover:bg-violet-50 rounded-lg transition-colors duration-200">
                     <span class="flex items-center"><i data-lucide="package-search" class="mr-3 h-5 w-5"></i> Productos</span>
                     <i data-lucide="chevron-down" class="h-5 w-5 transition-transform duration-200"></i>
                 </button>
+
                 <div id="productos-submenu" class="submenu max-h-0 overflow-hidden pl-4 mt-1">
                     <a href="#" data-view="productos-lista" class="nav-link flex items-center px-3 py-2 mt-1 text-slate-500 hover:text-violet-700 rounded-md">
                         Ver Productos
@@ -68,55 +57,144 @@
         </nav>
     </aside>
 
-    <!-- Contenido Principal -->
     <main class="flex-1 p-8 overflow-y-auto">
         
-        <!-- Vista del Dashboard (Inicio) -->
         <div id="dashboard-view">
-            <h1 class="text-4xl font-bold text-slate-800">¡Hola! Bienvenida de nuevo ✨</h1>
-            <p class="mt-2 text-slate-500">Un vistazo rápido a las métricas de tu negocio.</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 border-t-4 border-t-violet-400">
-                    <h2 class="text-lg font-medium text-slate-500">Productos Totales</h2><p id="stat-total-productos" class="text-4xl font-bold text-violet-600 mt-2">0</p>
+            <h1 class="text-4xl font-bold text-slate-800">¡Hola! Bienvenida a Stockify ✨</h1>
+            <p class="mt-2 text-slate-500">Un vistazo rápido a las métricas clave de tu negocio.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+                <a href="#" data-view-target="productos-lista" class="block stat-card border-t-violet-400">
+                    <h2 class="text-sm font-medium text-slate-500">Productos Totales</h2>
+                    <p id="stat-total-productos" class="text-3xl font-bold text-violet-600 mt-2">0</p>
+                    <div class="stat-card-link text-sm font-semibold text-slate-600 mt-4 flex items-center">Ver todos los productos <i data-lucide="arrow-right" class="h-4 w-4 ml-1"></i></div>
+                </a>
+                <div class="stat-card border-t-pink-400">
+                    <h2 class="text-sm font-medium text-slate-500">Valor del Inventario</h2>
+                    <p id="stat-valor-inventario" class="text-3xl font-bold text-pink-600 mt-2">$0.00</p>
+                    <p class="text-sm text-slate-400 mt-4">Valor total de tu stock.</p>
                 </div>
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 border-t-4 border-t-pink-400">
-                    <h2 class="text-lg font-medium text-slate-500">Valor del Inventario</h2><p id="stat-valor-inventario" class="text-4xl font-bold text-pink-600 mt-2">$0.00</p>
+                <a href="#" data-view-target="productos-baja" class="block stat-card border-t-amber-400">
+                     <h2 class="text-sm font-medium text-slate-500">Items con Bajo Stock</h2>
+                    <p id="stat-bajo-stock" class="text-3xl font-bold text-amber-600 mt-2">0</p>
+                    <div class="stat-card-link text-sm font-semibold text-slate-600 mt-4 flex items-center">Revisar productos <i data-lucide="arrow-right" class="h-4 w-4 ml-1"></i></div>
+                </a>
+                <a href="#" data-view-target="productos-lista" class="block stat-card border-t-teal-400">
+                    <h2 class="text-sm font-medium text-slate-500">Producto más Valioso</h2>
+                    <p id="stat-mas-valioso" class="text-2xl font-bold text-teal-600 mt-2 truncate">N/A</p>
+                    <p id="stat-mas-valioso-valor" class="text-sm text-slate-400 mt-1">Valor: $0.00</p>
+                </a>
+                <a href="#" data-view-target="productos-lista" class="block stat-card border-t-sky-400">
+                    <h2 class="text-sm font-medium text-slate-500">Producto con Mayor Stock</h2>
+                    <p id="stat-mayor-stock" class="text-2xl font-bold text-sky-600 mt-2 truncate">N/A</p>
+                     <p id="stat-mayor-stock-cantidad" class="text-sm text-slate-400 mt-1">Unidades: 0</p>
+                </a>
+                <div class="stat-card border-t-lime-500">
+                    <h2 class="text-sm font-medium text-slate-500">Precio Promedio</h2>
+                    <p id="stat-precio-promedio" class="text-3xl font-bold text-lime-600 mt-2">$0.00</p>
+                    <p class="text-sm text-slate-400 mt-4">Coste medio por producto.</p>
                 </div>
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 border-t-4 border-t-amber-400">
-                    <h2 class="text-lg font-medium text-slate-500">Items con Bajo Stock (&lt;10)</h2><p id="stat-bajo-stock" class="text-4xl font-bold text-amber-600 mt-2">0</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-5 gap-6 mt-8">
+                <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    <h3 class="text-lg font-semibold text-slate-700">Top 5 Productos por Valor</h3>
+                    <p class="text-sm text-slate-500">Distribución del valor del inventario.</p>
+                    <div class="mt-4 h-64"><canvas id="valorChart"></canvas></div>
+                </div>
+                <div class="lg:col-span-3 bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                     <h3 class="text-lg font-semibold text-slate-700">Top 5 Productos por Cantidad</h3>
+                      <p class="text-sm text-slate-500">Productos con más unidades en stock.</p>
+                    <div class="mt-4 h-64"><canvas id="cantidadChart"></canvas></div>
                 </div>
             </div>
         </div>
 
-        <!-- Vista del CRUD de Productos -->
         <div id="productos-lista-view" class="hidden">
-            <h1 class="text-4xl font-bold text-slate-800">Gestión de Productos</h1>
+            <h1 id="form-title" class="text-4xl font-bold text-slate-800">Gestión de Productos</h1>
             <p class="mt-2 text-slate-500">Añade nuevos productos y administra tu inventario.</p>
             <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 mt-8">
-                 <form id="formulario-producto" novalidate>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-end">
-                        <div><label for="nombre" class="block text-sm font-medium text-slate-700">Nombre</label><input type="text" id="nombre" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm" required></div>
-                        <div><label for="cantidad" class="block text-sm font-medium text-slate-700">Cantidad</label><input type="number" id="cantidad" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm" required min="0"></div>
-                        <div><button type="submit" class="w-full py-3 px-6 border border-transparent shadow-sm text-sm font-medium rounded-lg text-white bg-violet-500 hover:bg-violet-600">Añadir Producto</button></div>
-                        <div><label for="precio" class="block text-sm font-medium text-slate-700">Precio</label><input type="number" id="precio" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm" required min="0" step="0.01"></div>
+                <form id="formulario-producto" novalidate>
+                    <input type="hidden" id="producto-id">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="nombre" class="block text-sm font-medium text-slate-700">Nombre del Producto</label>
+                            <input type="text" id="nombre" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm focus:border-violet-500 focus:ring-violet-500" required>
+                        </div>
+                        <div>
+                            <label for="cantidad" class="block text-sm font-medium text-slate-700">Cantidad en Stock</label>
+                            <input type="number" id="cantidad" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm focus:border-violet-500 focus:ring-violet-500" required min="0">
+                        </div>
+                        <div>
+                            <label for="precio" class="block text-sm font-medium text-slate-700">Precio Unitario</label>
+                            <input type="number" id="precio" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm focus:border-violet-500 focus:ring-violet-500" required min="0" step="0.01">
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-end gap-4 mt-6">
+                        <button type="button" id="btn-cancelar" class="hidden py-2 px-5 border border-slate-300 shadow-sm text-sm font-medium rounded-lg text-slate-700 bg-white hover:bg-slate-50">Cancelar</button>
+                        <button type="submit" id="btn-submit-producto" class="py-2 px-5 border border-transparent shadow-sm text-sm font-medium rounded-lg text-white bg-violet-600 hover:bg-violet-700">Añadir Producto</button>
                     </div>
                 </form>
             </div>
             <div class="bg-white rounded-2xl shadow-sm border border-slate-200 mt-8"><div class="overflow-x-auto"><table class="min-w-full"><thead class="bg-slate-50"><tr><th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Nombre</th><th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Cantidad</th><th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Precio</th><th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Acciones</th></tr></thead><tbody id="tabla-productos" class="bg-white divide-y divide-slate-100"></tbody></table></div></div>
         </div>
         
-        <!-- Vista Productos de Baja (Implementada) -->
         <div id="productos-baja-view" class="hidden">
-             <h1 class="text-4xl font-bold text-slate-800">Productos de Baja</h1>
-             <p class="mt-2 text-slate-500">Estos productos necesitan tu atención. ¡Considera reponer el stock!</p>
+             <h1 class="text-4xl font-bold text-slate-800">Productos de Baja</h1><p class="mt-2 text-slate-500">Estos productos necesitan tu atención. ¡Considera reponer el stock!</p>
              <div class="bg-white rounded-2xl shadow-sm border border-slate-200 mt-8"><div class="overflow-x-auto"><table class="min-w-full"><thead class="bg-amber-50"><tr><th class="px-6 py-4 text-left text-xs font-medium text-amber-700 uppercase tracking-wider">Nombre</th><th class="px-6 py-4 text-left text-xs font-medium text-amber-700 uppercase tracking-wider">Cantidad Actual</th><th class="px-6 py-4 text-left text-xs font-medium text-amber-700 uppercase tracking-wider">Precio</th></tr></thead><tbody id="tabla-productos-baja" class="bg-white divide-y divide-slate-100"></tbody></table></div></div>
         </div>
 
-        <!-- Vistas de Placeholders -->
-        <div id="gastos-view" class="hidden text-center py-20"><i data-lucide="construction" class="mx-auto h-16 w-16 text-slate-400"></i><h1 class="mt-4 text-2xl font-bold text-slate-700">Sección de Gastos</h1><p class="mt-2 text-slate-500">En construcción. ¡Aquí podrás administrar tus facturas pronto!</p></div>
-        <div id="proveedores-view" class="hidden text-center py-20"><i data-lucide="construction" class="mx-auto h-16 w-16 text-slate-400"></i><h1 class="mt-4 text-2xl font-bold text-slate-700">Sección de Proveedores</h1><p class="mt-2 text-slate-500">En construcción. ¡Aquí podrás administrar tus proveedores pronto!</p></div>
-        <div id="facturacion-view" class="hidden text-center py-20"><i data-lucide="construction" class="mx-auto h-16 w-16 text-slate-400"></i><h1 class="mt-4 text-2xl font-bold text-slate-700">Sección de Facturación</h1><p class="mt-2 text-slate-500">En construcción. ¡Aquí podrás generar facturas pronto!</p></div>
-        <div id="notas-view" class="hidden text-center py-20"><i data-lucide="construction" class="mx-auto h-16 w-16 text-slate-400"></i><h1 class="mt-4 text-2xl font-bold text-slate-700">Sección de Notas</h1><p class="mt-2 text-slate-500">En construcción. ¡Aquí podrás guardar tus notas pronto!</p></div>
+        <div id="gastos-view" class="hidden text-center py-20"><i data-lucide="construction" class="mx-auto h-16 w-16 text-slate-400"></i><h1 class="mt-4 text-2xl font-bold text-slate-700">Sección de Gastos</h1><p class="mt-2 text-slate-500">En construcción.</p></div>
+        
+        <div id="proveedores-view" class="hidden">
+            <h1 class="text-4xl font-bold text-slate-800">Gestión de Proveedores</h1>
+            <p class="mt-2 text-slate-500">Añade y administra tus contactos de proveedores.</p>
+        
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 mt-8">
+                <form id="formulario-proveedor" novalidate>
+                    <input type="hidden" id="proveedor-id">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="proveedor-nombre" class="block text-sm font-medium text-slate-700">Nombre del Proveedor</label>
+                            <input type="text" id="proveedor-nombre" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm focus:border-violet-500 focus:ring-violet-500" required>
+                        </div>
+                        <div>
+                            <label for="proveedor-telefono" class="block text-sm font-medium text-slate-700">Teléfono</label>
+                            <input type="tel" id="proveedor-telefono" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm focus:border-violet-500 focus:ring-violet-500">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label for="proveedor-email" class="block text-sm font-medium text-slate-700">Email</label>
+                            <input type="email" id="proveedor-email" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm focus:border-violet-500 focus:ring-violet-500">
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-end gap-4 mt-6">
+                        <button type="button" id="btn-cancelar-proveedor" class="hidden py-2 px-5 border border-slate-300 shadow-sm text-sm font-medium rounded-lg text-slate-700 bg-white hover:bg-slate-50">Cancelar</button>
+                        <button type="submit" id="btn-submit-proveedor" class="py-2 px-5 border border-transparent shadow-sm text-sm font-medium rounded-lg text-white bg-violet-600 hover:bg-violet-700">Añadir Proveedor</button>
+                    </div>
+                </form>
+            </div>
+        
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 mt-8">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full">
+                        <thead class="bg-slate-50">
+                            <tr>
+                                <th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Nombre</th>
+                                <th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Teléfono</th>
+                                <th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Email</th>
+                                <th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-proveedores" class="bg-white divide-y divide-slate-100">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="facturacion-view" class="hidden text-center py-20"><i data-lucide="construction" class="mx-auto h-16 w-16 text-slate-400"></i><h1 class="mt-4 text-2xl font-bold text-slate-700">Sección de Facturación</h1><p class="mt-2 text-slate-500">En construcción.</p></div>
+        <div id="notas-view" class="hidden text-center py-20"><i data-lucide="construction" class="mx-auto h-16 w-16 text-slate-400"></i><h1 class="mt-4 text-2xl font-bold text-slate-700">Sección de Notas</h1><p class="mt-2 text-slate-500">En construcción.</p></div>
+
     </main>
 </div>
 

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de Inventario</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #f7f3ff; 
+        }
+        .nav-link.active {
+            background-color: #ede9fe; 
+            color: #6d28d9; 
+            font-weight: 600;
+        }
+        .nav-link.active i {
+            color: #6d28d9; 
+        }
+        .submenu { transition: max-height 0.3s ease-in-out; }
+    </style>
+</head>
+<body class="h-full">
+
+<div class="flex h-screen">
+    <!-- Barra de Navegación Lateral "Cute" -->
+    <aside class="w-64 flex-shrink-0 bg-white flex flex-col p-4">
+        <div class="h-16 flex items-center justify-center text-2xl font-bold text-violet-700">
+            <span>Mi Tiendita</span>
+        </div>
+        <nav class="flex-1 mt-6 space-y-2">
+            <a href="#" data-view="dashboard" class="nav-link flex items-center px-4 py-3 text-slate-600 hover:bg-violet-50 rounded-lg transition-colors duration-200">
+                <i data-lucide="home" class="mr-3 h-5 w-5"></i> Inicio
+            </a>
+            
+            <div>
+                <button id="productos-toggle" class="w-full nav-link flex items-center justify-between px-4 py-3 text-slate-600 hover:bg-violet-50 rounded-lg transition-colors duration-200">
+                    <span class="flex items-center"><i data-lucide="package-search" class="mr-3 h-5 w-5"></i> Productos</span>
+                    <i data-lucide="chevron-down" class="h-5 w-5 transition-transform duration-200"></i>
+                </button>
+                <div id="productos-submenu" class="submenu max-h-0 overflow-hidden pl-4 mt-1">
+                    <a href="#" data-view="productos-lista" class="nav-link flex items-center px-3 py-2 mt-1 text-slate-500 hover:text-violet-700 rounded-md">
+                        Ver Productos
+                    </a>
+                    <a href="#" data-view="productos-baja" class="nav-link flex items-center px-3 py-2 mt-1 text-slate-500 hover:text-violet-700 rounded-md">
+                        Productos de Baja
+                    </a>
+                </div>
+            </div>
+
+            <a href="#" data-view="gastos" class="nav-link flex items-center px-4 py-3 text-slate-600 hover:bg-violet-50 rounded-lg transition-colors duration-200">
+                <i data-lucide="receipt" class="mr-3 h-5 w-5"></i> Gastos
+            </a>
+            <a href="#" data-view="proveedores" class="nav-link flex items-center px-4 py-3 text-slate-600 hover:bg-violet-50 rounded-lg transition-colors duration-200">
+                <i data-lucide="truck" class="mr-3 h-5 w-5"></i> Proveedores
+            </a>
+            <a href="#" data-view="facturacion" class="nav-link flex items-center px-4 py-3 text-slate-600 hover:bg-violet-50 rounded-lg transition-colors duration-200">
+                <i data-lucide="file-text" class="mr-3 h-5 w-5"></i> Facturación
+            </a>
+             <a href="#" data-view="notas" class="nav-link flex items-center px-4 py-3 text-slate-600 hover:bg-violet-50 rounded-lg transition-colors duration-200">
+                <i data-lucide="sticky-note" class="mr-3 h-5 w-5"></i> Notas
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Contenido Principal -->
+    <main class="flex-1 p-8 overflow-y-auto">
+        
+        <!-- Vista del Dashboard (Inicio) -->
+        <div id="dashboard-view">
+            <h1 class="text-4xl font-bold text-slate-800">¡Hola! Bienvenida de nuevo ✨</h1>
+            <p class="mt-2 text-slate-500">Un vistazo rápido a las métricas de tu negocio.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 border-t-4 border-t-violet-400">
+                    <h2 class="text-lg font-medium text-slate-500">Productos Totales</h2><p id="stat-total-productos" class="text-4xl font-bold text-violet-600 mt-2">0</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 border-t-4 border-t-pink-400">
+                    <h2 class="text-lg font-medium text-slate-500">Valor del Inventario</h2><p id="stat-valor-inventario" class="text-4xl font-bold text-pink-600 mt-2">$0.00</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 border-t-4 border-t-amber-400">
+                    <h2 class="text-lg font-medium text-slate-500">Items con Bajo Stock (&lt;10)</h2><p id="stat-bajo-stock" class="text-4xl font-bold text-amber-600 mt-2">0</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vista del CRUD de Productos -->
+        <div id="productos-lista-view" class="hidden">
+            <h1 class="text-4xl font-bold text-slate-800">Gestión de Productos</h1>
+            <p class="mt-2 text-slate-500">Añade nuevos productos y administra tu inventario.</p>
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 mt-8">
+                 <form id="formulario-producto" novalidate>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-end">
+                        <div><label for="nombre" class="block text-sm font-medium text-slate-700">Nombre</label><input type="text" id="nombre" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm" required></div>
+                        <div><label for="cantidad" class="block text-sm font-medium text-slate-700">Cantidad</label><input type="number" id="cantidad" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm" required min="0"></div>
+                        <div><button type="submit" class="w-full py-3 px-6 border border-transparent shadow-sm text-sm font-medium rounded-lg text-white bg-violet-500 hover:bg-violet-600">Añadir Producto</button></div>
+                        <div><label for="precio" class="block text-sm font-medium text-slate-700">Precio</label><input type="number" id="precio" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm" required min="0" step="0.01"></div>
+                    </div>
+                </form>
+            </div>
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 mt-8"><div class="overflow-x-auto"><table class="min-w-full"><thead class="bg-slate-50"><tr><th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Nombre</th><th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Cantidad</th><th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Precio</th><th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Acciones</th></tr></thead><tbody id="tabla-productos" class="bg-white divide-y divide-slate-100"></tbody></table></div></div>
+        </div>
+        
+        <!-- Vista Productos de Baja (Implementada) -->
+        <div id="productos-baja-view" class="hidden">
+             <h1 class="text-4xl font-bold text-slate-800">Productos de Baja</h1>
+             <p class="mt-2 text-slate-500">Estos productos necesitan tu atención. ¡Considera reponer el stock!</p>
+             <div class="bg-white rounded-2xl shadow-sm border border-slate-200 mt-8"><div class="overflow-x-auto"><table class="min-w-full"><thead class="bg-amber-50"><tr><th class="px-6 py-4 text-left text-xs font-medium text-amber-700 uppercase tracking-wider">Nombre</th><th class="px-6 py-4 text-left text-xs font-medium text-amber-700 uppercase tracking-wider">Cantidad Actual</th><th class="px-6 py-4 text-left text-xs font-medium text-amber-700 uppercase tracking-wider">Precio</th></tr></thead><tbody id="tabla-productos-baja" class="bg-white divide-y divide-slate-100"></tbody></table></div></div>
+        </div>
+
+        <!-- Vistas de Placeholders -->
+        <div id="gastos-view" class="hidden text-center py-20"><i data-lucide="construction" class="mx-auto h-16 w-16 text-slate-400"></i><h1 class="mt-4 text-2xl font-bold text-slate-700">Sección de Gastos</h1><p class="mt-2 text-slate-500">En construcción. ¡Aquí podrás administrar tus facturas pronto!</p></div>
+        <div id="proveedores-view" class="hidden text-center py-20"><i data-lucide="construction" class="mx-auto h-16 w-16 text-slate-400"></i><h1 class="mt-4 text-2xl font-bold text-slate-700">Sección de Proveedores</h1><p class="mt-2 text-slate-500">En construcción. ¡Aquí podrás administrar tus proveedores pronto!</p></div>
+        <div id="facturacion-view" class="hidden text-center py-20"><i data-lucide="construction" class="mx-auto h-16 w-16 text-slate-400"></i><h1 class="mt-4 text-2xl font-bold text-slate-700">Sección de Facturación</h1><p class="mt-2 text-slate-500">En construcción. ¡Aquí podrás generar facturas pronto!</p></div>
+        <div id="notas-view" class="hidden text-center py-20"><i data-lucide="construction" class="mx-auto h-16 w-16 text-slate-400"></i><h1 class="mt-4 text-2xl font-bold text-slate-700">Sección de Notas</h1><p class="mt-2 text-slate-500">En construcción. ¡Aquí podrás guardar tus notas pronto!</p></div>
+    </main>
+</div>
+
+<script>lucide.createIcons();</script>
+<script src="/static/js/script.js"></script>
+
+</body>
+</html>

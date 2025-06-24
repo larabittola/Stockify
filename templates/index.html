@@ -8,9 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
     <link rel="stylesheet" href="/static/style.css">
-
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -27,31 +25,36 @@
             </a>
             
             <div>
-                <button id="productos-toggle"  class="w-full nav-link flex items-center justify-between px-4 py-3 text-slate-600 hover:bg-violet-50 rounded-lg transition-colors duration-200">
+                <button id="productos-toggle" class="w-full nav-link flex items-center justify-between px-4 py-3 text-slate-600 hover:bg-violet-50 rounded-lg transition-colors duration-200">
                     <span class="flex items-center"><i data-lucide="package-search" class="mr-3 h-5 w-5"></i> Productos</span>
                     <i data-lucide="chevron-down" class="h-5 w-5 transition-transform duration-200"></i>
                 </button>
-
                 <div id="productos-submenu" class="submenu max-h-0 overflow-hidden pl-4 mt-1">
-                    <a href="#" data-view="productos-lista" class="nav-link flex items-center px-3 py-2 mt-1 text-slate-500 hover:text-violet-700 rounded-md">
-                        Ver Productos
-                    </a>
-                    <a href="#" data-view="productos-baja" class="nav-link flex items-center px-3 py-2 mt-1 text-slate-500 hover:text-violet-700 rounded-md">
-                        Productos de Baja
-                    </a>
+                    <a href="#" data-view="productos-lista" class="nav-link flex items-center px-3 py-2 mt-1 text-slate-500 hover:text-violet-700 rounded-md">Lista de productos</a>
+                    <a href="#" data-view="productos-agregar" class="nav-link flex items-center px-3 py-2 mt-1 text-slate-500 hover:text-violet-700 rounded-md">Agregar producto</a>
+                    <a href="#" data-view="productos-baja" class="nav-link flex items-center px-3 py-2 mt-1 text-slate-500 hover:text-violet-700 rounded-md">Bajo Stock</a>
                 </div>
             </div>
 
             <a href="#" data-view="gastos" class="nav-link flex items-center px-4 py-3 text-slate-600 hover:bg-violet-50 rounded-lg transition-colors duration-200">
                 <i data-lucide="receipt" class="mr-3 h-5 w-5"></i> Gastos
             </a>
-            <a href="#" data-view="proveedores" class="nav-link flex items-center px-4 py-3 text-slate-600 hover:bg-violet-50 rounded-lg transition-colors duration-200">
-                <i data-lucide="truck" class="mr-3 h-5 w-5"></i> Proveedores
-            </a>
+            
+            <div>
+                <button id="proveedores-toggle" class="w-full nav-link flex items-center justify-between px-4 py-3 text-slate-600 hover:bg-violet-50 rounded-lg transition-colors duration-200">
+                    <span class="flex items-center"><i data-lucide="truck" class="mr-3 h-5 w-5"></i> Proveedores</span>
+                    <i data-lucide="chevron-down" class="h-5 w-5 transition-transform duration-200"></i>
+                </button>
+                <div id="proveedores-submenu" class="submenu max-h-0 overflow-hidden pl-4 mt-1">
+                    <a href="#" data-view="proveedores-lista" class="nav-link flex items-center px-3 py-2 mt-1 text-slate-500 hover:text-violet-700 rounded-md">Ver Lista</a>
+                    <a href="#" data-view="proveedores-agregar" class="nav-link flex items-center px-3 py-2 mt-1 text-slate-500 hover:text-violet-700 rounded-md">Añadir Proveedor</a>
+                </div>
+            </div>
+
             <a href="#" data-view="facturacion" class="nav-link flex items-center px-4 py-3 text-slate-600 hover:bg-violet-50 rounded-lg transition-colors duration-200">
                 <i data-lucide="file-text" class="mr-3 h-5 w-5"></i> Facturación
             </a>
-             <a href="#" data-view="notas" class="nav-link flex items-center px-4 py-3 text-slate-600 hover:bg-violet-50 rounded-lg transition-colors duration-200">
+            <a href="#" data-view="notas-lista" class="nav-link flex items-center px-4 py-3 text-slate-600 hover:bg-violet-50 rounded-lg transition-colors duration-200">
                 <i data-lucide="sticky-note" class="mr-3 h-5 w-5"></i> Notas
             </a>
         </nav>
@@ -96,105 +99,268 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-5 gap-6 mt-8">
-                <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-8">
+                <div class="lg:col-span-1 bg-white p-6 rounded-xl shadow-sm border border-slate-200">
                     <h3 class="text-lg font-semibold text-slate-700">Top 5 Productos por Valor</h3>
-                    <p class="text-sm text-slate-500">Distribución del valor del inventario.</p>
+                    <p class="text-sm text-slate-500">Distribución del valor.</p>
                     <div class="mt-4 h-64"><canvas id="valorChart"></canvas></div>
                 </div>
-                <div class="lg:col-span-3 bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                <div class="lg:col-span-1 bg-white p-6 rounded-xl shadow-sm border border-slate-200">
                      <h3 class="text-lg font-semibold text-slate-700">Top 5 Productos por Cantidad</h3>
-                      <p class="text-sm text-slate-500">Productos con más unidades en stock.</p>
+                      <p class="text-sm text-slate-500">Unidades en stock.</p>
                     <div class="mt-4 h-64"><canvas id="cantidadChart"></canvas></div>
+                </div>
+                <div class="lg:col-span-1 bg-white p-6 rounded-xl shadow-sm border border-slate-200 flex flex-col">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-lg font-semibold text-slate-700">Notas Rápidas</h3>
+                        <a href="#" data-view="notas-lista" class="nav-link text-sm font-semibold text-violet-600 hover:text-violet-800">Ver todas</a>
+                    </div>
+                    <div id="dashboard-notas-container" class="mt-4 space-y-3 flex-grow max-h-80 overflow-y-auto">
+                        </div>
                 </div>
             </div>
         </div>
 
         <div id="productos-lista-view" class="hidden">
-            <h1 id="form-title" class="text-4xl font-bold text-slate-800">Gestión de Productos</h1>
-            <p class="mt-2 text-slate-500">Añade nuevos productos y administra tu inventario.</p>
-            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 mt-8">
-                <form id="formulario-producto" novalidate>
-                    <input type="hidden" id="producto-id">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label for="nombre" class="block text-sm font-medium text-slate-700">Nombre del Producto</label>
-                            <input type="text" id="nombre" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm focus:border-violet-500 focus:ring-violet-500" required>
-                        </div>
-                        <div>
-                            <label for="cantidad" class="block text-sm font-medium text-slate-700">Cantidad en Stock</label>
-                            <input type="number" id="cantidad" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm focus:border-violet-500 focus:ring-violet-500" required min="0">
-                        </div>
-                        <div>
-                            <label for="precio" class="block text-sm font-medium text-slate-700">Precio Unitario</label>
-                            <input type="number" id="precio" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm focus:border-violet-500 focus:ring-violet-500" required min="0" step="0.01">
-                        </div>
-                    </div>
-                    <div class="flex items-center justify-end gap-4 mt-6">
-                        <button type="button" id="btn-cancelar" class="hidden py-2 px-5 border border-slate-300 shadow-sm text-sm font-medium rounded-lg text-slate-700 bg-white hover:bg-slate-50">Cancelar</button>
-                        <button type="submit" id="btn-submit-producto" class="py-2 px-5 border border-transparent shadow-sm text-sm font-medium rounded-lg text-white bg-violet-600 hover:bg-violet-700">Añadir Producto</button>
-                    </div>
-                </form>
+            <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+                <div>
+                    <h1 class="text-3xl font-bold text-slate-800">Lista de Productos</h1>
+                    <p class="text-slate-500 mt-1">Gestiona y visualiza tus productos.</p>
+                </div>
+                <button id="btn-agregar-producto-desde-lista" class="flex items-center bg-violet-600 hover:bg-violet-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500 transition-colors duration-200">
+                    <i data-lucide="plus" class="h-5 w-5 mr-2"></i> 
+                    <span>Agregar Producto</span>
+                </button>
             </div>
-            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 mt-8"><div class="overflow-x-auto"><table class="min-w-full"><thead class="bg-slate-50"><tr><th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Nombre</th><th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Cantidad</th><th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Precio</th><th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Acciones</th></tr></thead><tbody id="tabla-productos" class="bg-white divide-y divide-slate-100"></tbody></table></div></div>
-        </div>
-        
-        <div id="productos-baja-view" class="hidden">
-             <h1 class="text-4xl font-bold text-slate-800">Productos de Baja</h1><p class="mt-2 text-slate-500">Estos productos necesitan tu atención. ¡Considera reponer el stock!</p>
-             <div class="bg-white rounded-2xl shadow-sm border border-slate-200 mt-8"><div class="overflow-x-auto"><table class="min-w-full"><thead class="bg-amber-50"><tr><th class="px-6 py-4 text-left text-xs font-medium text-amber-700 uppercase tracking-wider">Nombre</th><th class="px-6 py-4 text-left text-xs font-medium text-amber-700 uppercase tracking-wider">Cantidad Actual</th><th class="px-6 py-4 text-left text-xs font-medium text-amber-700 uppercase tracking-wider">Precio</th></tr></thead><tbody id="tabla-productos-baja" class="bg-white divide-y divide-slate-100"></tbody></table></div></div>
-        </div>
-
-        <div id="gastos-view" class="hidden text-center py-20"><i data-lucide="construction" class="mx-auto h-16 w-16 text-slate-400"></i><h1 class="mt-4 text-2xl font-bold text-slate-700">Sección de Gastos</h1><p class="mt-2 text-slate-500">En construcción.</p></div>
-        
-        <div id="proveedores-view" class="hidden">
-            <h1 class="text-4xl font-bold text-slate-800">Gestión de Proveedores</h1>
-            <p class="mt-2 text-slate-500">Añade y administra tus contactos de proveedores.</p>
-        
-            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 mt-8">
-                <form id="formulario-proveedor" novalidate>
-                    <input type="hidden" id="proveedor-id">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label for="proveedor-nombre" class="block text-sm font-medium text-slate-700">Nombre del Proveedor</label>
-                            <input type="text" id="proveedor-nombre" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm focus:border-violet-500 focus:ring-violet-500" required>
-                        </div>
-                        <div>
-                            <label for="proveedor-telefono" class="block text-sm font-medium text-slate-700">Teléfono</label>
-                            <input type="tel" id="proveedor-telefono" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm focus:border-violet-500 focus:ring-violet-500">
-                        </div>
-                        <div class="md:col-span-2">
-                            <label for="proveedor-email" class="block text-sm font-medium text-slate-700">Email</label>
-                            <input type="email" id="proveedor-email" class="mt-1 block w-full rounded-lg border-slate-300 shadow-sm focus:border-violet-500 focus:ring-violet-500">
-                        </div>
-                    </div>
-                    <div class="flex items-center justify-end gap-4 mt-6">
-                        <button type="button" id="btn-cancelar-proveedor" class="hidden py-2 px-5 border border-slate-300 shadow-sm text-sm font-medium rounded-lg text-slate-700 bg-white hover:bg-slate-50">Cancelar</button>
-                        <button type="submit" id="btn-submit-proveedor" class="py-2 px-5 border border-transparent shadow-sm text-sm font-medium rounded-lg text-white bg-violet-600 hover:bg-violet-700">Añadir Proveedor</button>
-                    </div>
-                </form>
+            <div class="flex flex-wrap items-center gap-4 mb-4">
+                <input type="text" id="producto-search" placeholder="Buscar producto..." class="form-input flex-grow md:flex-grow-0 md:w-1/3 mt-0">
+                <select id="producto-filtro" class="form-input mt-0">
+                    <option value="default">Más recientes</option>
+                    <option value="price_asc">Precio: más bajo a más alto</option>
+                    <option value="price_desc">Precio: más alto a más bajo</option>
+                    <option value="name_asc">Nombre: A-Z</option>
+                    <option value="name_desc">Nombre: Z-A</option>
+                    <option value="stock_asc">Stock: menor a mayor</option>
+                    <option value="stock_desc">Stock: mayor a menor</option>
+                </select>
             </div>
-        
-            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 mt-8">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200">
                 <div class="overflow-x-auto">
                     <table class="min-w-full">
                         <thead class="bg-slate-50">
                             <tr>
-                                <th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Nombre</th>
-                                <th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Teléfono</th>
-                                <th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Email</th>
-                                <th class="px-6 py-4 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Acciones</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Nombre</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Proveedor</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Cantidad</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Precio</th>
+                                <th class="px-6 py-3 text-right text-xs font-medium text-slate-500 uppercase tracking-wider">Acciones</th>
                             </tr>
                         </thead>
-                        <tbody id="tabla-proveedores" class="bg-white divide-y divide-slate-100">
-                            </tbody>
+                        <tbody id="tabla-productos" class="bg-white divide-y divide-slate-100"></tbody>
                     </table>
                 </div>
             </div>
         </div>
 
-        <div id="facturacion-view" class="hidden text-center py-20"><i data-lucide="construction" class="mx-auto h-16 w-16 text-slate-400"></i><h1 class="mt-4 text-2xl font-bold text-slate-700">Sección de Facturación</h1><p class="mt-2 text-slate-500">En construcción.</p></div>
-        <div id="notas-view" class="hidden text-center py-20"><i data-lucide="construction" class="mx-auto h-16 w-16 text-slate-400"></i><h1 class="mt-4 text-2xl font-bold text-slate-700">Sección de Notas</h1><p class="mt-2 text-slate-500">En construcción.</p></div>
+        <div id="productos-agregar-view" class="hidden">
+            <h1 id="form-title" class="text-3xl font-bold text-slate-800 mb-2">Agregar Nuevo Producto</h1>
+            <p class="text-slate-500 mb-6">Completa el formulario para añadir o editar un producto en el inventario.</p>
+            <div class="bg-white p-8 rounded-2xl shadow-md border border-slate-200">
+                <form id="formulario-producto" novalidate>
+                    <input type="hidden" id="producto-id">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div>
+                            <label for="nombre" class="block text-sm font-medium text-slate-700">Nombre del Producto <span class="text-red-500">*</span></label>
+                            <input type="text" id="nombre" class="form-input" required>
+                        </div>
+                        <div>
+                            <label for="cantidad" class="block text-sm font-medium text-slate-700">Cantidad <span class="text-red-500">*</span></label>
+                            <input type="number" id="cantidad" class="form-input" required min="0">
+                        </div>
+                        <div>
+                            <label for="precio" class="block text-sm font-medium text-slate-700">Precio Unitario <span class="text-red-500">*</span></label>
+                            <input type="number" id="precio" class="form-input" required min="0" step="0.01">
+                        </div>
+                        <div class="md:col-span-3">
+                            <label for="producto-proveedor" class="block text-sm font-medium text-slate-700">Proveedor</label>
+                            <select id="producto-proveedor" class="form-input"></select>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-end gap-4 mt-6">
+                        <button type="button" id="btn-cancelar" class="py-2 px-5 border border-slate-300 rounded-lg shadow-sm text-sm font-medium text-slate-700 bg-white hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500">Cancelar</button>
+                        <button type="submit" id="btn-submit-producto" class="py-2 px-5 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-violet-600 hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500">Añadir Producto</button>
+                    </div>
+                </form>
+            </div>
+        </div>
 
+        <div id="productos-baja-view" class="hidden">
+             <h1 class="text-3xl font-bold text-slate-800">Bajo Stock</h1>
+             <p class="mt-1 text-slate-500 mb-6">Estos productos necesitan tu atención. ¡Considera reponer el stock!</p>
+             <div class="bg-white rounded-2xl shadow-sm border border-slate-200">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full">
+                        <thead class="bg-amber-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-amber-700 uppercase tracking-wider">Nombre</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-amber-700 uppercase tracking-wider">Cantidad Actual</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-amber-700 uppercase tracking-wider">Precio</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-productos-baja" class="bg-white divide-y divide-slate-100"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="proveedores-lista-view" class="hidden">
+            <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+                <div>
+                    <h1 class="text-3xl font-bold text-slate-800">Lista de Proveedores</h1>
+                    <p class="text-slate-500 mt-1">Administra tus contactos de proveedores.</p>
+                </div>
+                <button data-view="proveedores-agregar" class="nav-link flex items-center bg-violet-600 hover:bg-violet-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500 transition-colors duration-200">
+                    <i data-lucide="plus" class="h-5 w-5 mr-2"></i> 
+                    <span>Añadir Proveedor</span>
+                </button>
+            </div>
+            <div class="mb-4">
+                <input type="text" id="proveedor-search" placeholder="Buscar proveedor por nombre..." class="form-input w-full md:w-1/3 mt-0">
+            </div>
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full">
+                        <thead class="bg-slate-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Nombre</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Tipo de Productos</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Email</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Teléfono</th>
+                                <th class="px-6 py-3 text-right text-xs font-medium text-slate-500 uppercase tracking-wider">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-proveedores" class="bg-white divide-y divide-slate-100"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div id="proveedores-agregar-view" class="hidden">
+            <h1 id="proveedor-form-title" class="text-3xl font-bold text-slate-800 mb-2">Añadir Proveedor</h1>
+            <p class="text-slate-500 mb-6">Completa la información para añadir o editar un proveedor.</p>
+        
+            <div class="bg-white p-8 rounded-2xl shadow-md border border-slate-200">
+                <form id="formulario-proveedor" novalidate>
+                    <input type="hidden" id="proveedor-id">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="proveedor-nombre" class="block text-sm font-medium text-slate-700">Nombre del Proveedor <span class="text-red-500">*</span></label>
+                            <input type="text" id="proveedor-nombre" class="form-input" required>
+                        </div>
+                        <div>
+                            <label for="proveedor-email" class="block text-sm font-medium text-slate-700">Email</label>
+                            <input type="email" id="proveedor-email" placeholder="ejemplo@correo.com" class="form-input">
+                        </div>
+                        <div>
+                            <label for="proveedor-tipo-productos" class="block text-sm font-medium text-slate-700">Tipo de Productos</label>
+                            <input type="text" id="proveedor-tipo-productos" placeholder="Ej: Electrónica, Ropa, etc." class="form-input">
+                        </div>
+                        <div>
+                            <label for="proveedor-telefono" class="block text-sm font-medium text-slate-700">Teléfono</label>
+                            <input type="tel" id="proveedor-telefono" class="form-input">
+                        </div>
+                        <div>
+                            <label for="proveedor-calidad" class="block text-sm font-medium text-slate-700">Calidad Percibida</label>
+                            <select id="proveedor-calidad" class="form-input">
+                                <option value="">No especificada</option>
+                                <option value="Económica">Económica</option>
+                                <option value="Estándar">Estándar</option>
+                                <option value="Premium">Premium</option>
+                            </select>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label for="proveedor-notas" class="block text-sm font-medium text-slate-700">Notas Adicionales</label>
+                            <textarea id="proveedor-notas" rows="3" class="form-input" placeholder="Información de contacto, días de entrega, etc."></textarea>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-end gap-4 mt-6">
+                        <button type="button" id="btn-cancelar-proveedor" class="py-2 px-5 border border-slate-300 rounded-lg shadow-sm text-sm font-medium text-slate-700 bg-white hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500">Cancelar</button>
+                        <button type="submit" id="btn-submit-proveedor" class="py-2 px-5 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-violet-600 hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500">Añadir Proveedor</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div id="notas-lista-view" class="hidden">
+            <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+                <div>
+                    <h1 class="text-3xl font-bold text-slate-800">Mis Notas</h1>
+                    <p class="text-slate-500 mt-1">Tus recordatorios, ideas y tareas pendientes.</p>
+                </div>
+                <button id="btn-crear-nota" class="flex items-center bg-violet-600 hover:bg-violet-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500 transition-colors duration-200">
+                    <i data-lucide="plus" class="h-5 w-5 mr-2"></i> 
+                    <span>Crear Nota</span>
+                </button>
+            </div>
+            <div id="notas-grid-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                </div>
+        </div>
+
+        <div id="notas-agregar-view" class="hidden">
+            <h1 id="nota-form-title" class="text-3xl font-bold text-slate-800 mb-2">Crear Nueva Nota</h1>
+            <p class="text-slate-500 mb-6">Añade un nuevo recordatorio o idea.</p>
+            <div class="bg-white p-8 rounded-2xl shadow-md border border-slate-200">
+                <form id="formulario-nota" novalidate>
+                    <input type="hidden" id="nota-id">
+                    <div class="space-y-6">
+                        <div>
+                            <label for="nota-titulo" class="block text-sm font-medium text-slate-700">Título <span class="text-red-500">*</span></label>
+                            <input type="text" id="nota-titulo" class="form-input" required>
+                        </div>
+                        <div>
+                            <label for="nota-contenido" class="block text-sm font-medium text-slate-700">Contenido <span class="text-red-500">*</span></label>
+                            <textarea id="nota-contenido" rows="6" class="form-input" required></textarea>
+                        </div>
+                        <div>
+                            <label for="nota-etiquetas" class="block text-sm font-medium text-slate-700">Etiquetas</label>
+                            <input type="text" id="nota-etiquetas" class="form-input" placeholder="Ej: urgente, pedido, clienteA">
+                            <p class="mt-1 text-xs text-slate-400">Separa las etiquetas con comas.</p>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">Color de la Nota</label>
+                                <div id="nota-colores" class="flex space-x-3">
+                                    <button type="button" data-color="yellow" class="h-8 w-8 rounded-full bg-yellow-300 border-2 border-transparent"></button>
+                                    <button type="button" data-color="blue" class="h-8 w-8 rounded-full bg-blue-300 border-2 border-transparent"></button>
+                                    <button type="button" data-color="green" class="h-8 w-8 rounded-full bg-green-300 border-2 border-transparent"></button>
+                                    <button type="button" data-color="red" class="h-8 w-8 rounded-full bg-red-300 border-2 border-transparent"></button>
+                                    <button type="button" data-color="gray" class="h-8 w-8 rounded-full bg-slate-300 border-2 border-transparent"></button>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="nota-importancia" class="block text-sm font-medium text-slate-700">Nivel de Importancia</label>
+                                <select id="nota-importancia" class="form-input">
+                                    <option value="1">Baja</option>
+                                    <option value="2">Media</option>
+                                    <option value="3">Alta</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <input id="nota-fijado" type="checkbox" class="h-4 w-4 text-violet-600 border-slate-300 rounded focus:ring-violet-500">
+                            <label for="nota-fijado" class="ml-2 block text-sm text-slate-800">Fijar en el dashboard</label>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-end gap-4 mt-8">
+                        <button type="button" id="btn-cancelar-nota" class="py-2 px-5 border border-slate-300 rounded-lg shadow-sm text-sm font-medium text-slate-700 bg-white hover:bg-slate-50">Cancelar</button>
+                        <button type="submit" id="btn-submit-nota" class="py-2 px-5 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-violet-600 hover:bg-violet-700">Guardar Nota</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div id="facturacion-view" class="hidden text-center py-20"><i data-lucide="construction" class="mx-auto h-16 w-16 text-slate-400"></i><h1 class="mt-4 text-2xl font-bold text-slate-700">Sección de Facturación</h1><p class="mt-2 text-slate-500">En construcción.</p></div>
+        <div id="gastos-view" class="hidden text-center py-20"><i data-lucide="construction" class="mx-auto h-16 w-16 text-slate-400"></i><h1 class="mt-4 text-2xl font-bold text-slate-700">Sección de Gastos</h1><p class="mt-2 text-slate-500">En construcción.</p></div>
     </main>
 </div>
 

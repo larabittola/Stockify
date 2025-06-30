@@ -1,0 +1,32 @@
+<div id="powerbi-view" class="hidden">
+    <div class="mb-6">
+        <h1 class="text-3xl font-bold text-slate-800">Análisis de Mercado Dinámico</h1>
+        <p class="text-slate-500 mt-1">
+            Combiná los filtros para explorar los datos en detalle.
+        </p>
+    </div>
+
+    <div class="bg-white p-4 rounded-xl shadow-sm border mb-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+            <label for="filtro-grafico" class="block text-sm font-medium text-slate-700">1. Seleccioná un Análisis:</label>
+            <select id="filtro-grafico" class="form-input mt-1">
+                <option value="evolucion">Evolución de Ventas Totales</option>
+                <option value="tendencia_mensual">Tendencia de Ventas Mensuales</option>
+                <option value="categorias">Ventas por Categoría de Producto</option>
+                <option value="canales">Proporción de Ventas por Canal</option>
+                <option value="pagos">Distribución por Medio de Pago</option>
+            </select>
+        </div>
+        <div>
+            <label for="filtro-fecha" class="block text-sm font-medium text-slate-700">2. Seleccioná un Año:</label>
+            <select id="filtro-fecha" class="form-input mt-1">
+                </select>
+        </div>
+    </div>
+
+    <div class="bg-white p-6 rounded-xl shadow-sm border">
+        <div class="relative h-96">
+            <canvas id="graficoPrincipal"></canvas>
+        </div>
+    </div>
+</div>

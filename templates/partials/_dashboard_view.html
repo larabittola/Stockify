@@ -1,0 +1,58 @@
+<div id="dashboard-view">
+    <h1 class="text-4xl font-bold text-slate-800">¡Hola! Bienvenida a Stockify ✨</h1>
+    <p class="mt-2 text-slate-500">Un vistazo rápido a las métricas clave de tu negocio.</p>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+        <a href="#" data-view-target="productos-lista" class="block stat-card border-t-violet-400">
+            <h2 class="text-sm font-medium text-slate-500">Productos Totales</h2>
+            <p id="stat-total-productos" class="text-3xl font-bold text-violet-600 mt-2">0</p>
+            <div class="stat-card-link text-sm font-semibold text-slate-600 mt-4 flex items-center">Ver todos los productos <i data-lucide="arrow-right" class="h-4 w-4 ml-1"></i></div>
+        </a>
+        <div class="stat-card border-t-pink-400">
+            <h2 class="text-sm font-medium text-slate-500">Valor del Inventario</h2>
+            <p id="stat-valor-inventario" class="text-3xl font-bold text-pink-600 mt-2">$0.00</p>
+            <p class="text-sm text-slate-400 mt-4">Valor total de tu stock.</p>
+        </div>
+        <a href="#" data-view-target="productos-baja" class="block stat-card border-t-amber-400">
+             <h2 class="text-sm font-medium text-slate-500">Items con Bajo Stock</h2>
+            <p id="stat-bajo-stock" class="text-3xl font-bold text-amber-600 mt-2">0</p>
+            <div class="stat-card-link text-sm font-semibold text-slate-600 mt-4 flex items-center">Revisar productos <i data-lucide="arrow-right" class="h-4 w-4 ml-1"></i></div>
+        </a>
+        <a href="#" data-view-target="productos-lista" class="block stat-card border-t-teal-400">
+            <h2 class="text-sm font-medium text-slate-500">Producto más Valioso</h2>
+            <p id="stat-mas-valioso" class="text-2xl font-bold text-teal-600 mt-2 truncate">N/A</p>
+            <p id="stat-mas-valioso-valor" class="text-sm text-slate-400 mt-1">Valor: $0.00</p>
+        </a>
+        <a href="#" data-view-target="productos-lista" class="block stat-card border-t-sky-400">
+            <h2 class="text-sm font-medium text-slate-500">Producto con Mayor Stock</h2>
+            <p id="stat-mayor-stock" class="text-2xl font-bold text-sky-600 mt-2 truncate">N/A</p>
+             <p id="stat-mayor-stock-cantidad" class="text-sm text-slate-400 mt-1">Unidades: 0</p>
+        </a>
+        <div class="stat-card border-t-lime-500">
+            <h2 class="text-sm font-medium text-slate-500">Precio Promedio</h2>
+            <p id="stat-precio-promedio" class="text-3xl font-bold text-lime-600 mt-2">$0.00</p>
+            <p class="text-sm text-slate-400 mt-4">Coste medio por producto.</p>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-8">
+        <div class="lg:col-span-1 bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+            <h3 class="text-lg font-semibold text-slate-700">Top 5 Productos por Valor</h3>
+            <p class="text-sm text-slate-500">Distribución del valor.</p>
+            <div class="mt-4 h-64"><canvas id="valorChart"></canvas></div>
+        </div>
+        <div class="lg:col-span-1 bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+             <h3 class="text-lg font-semibold text-slate-700">Top 5 Productos por Cantidad</h3>
+              <p class="text-sm text-slate-500">Unidades en stock.</p>
+            <div class="mt-4 h-64"><canvas id="cantidadChart"></canvas></div>
+        </div>
+        <div class="lg:col-span-1 bg-white p-6 rounded-xl shadow-sm border border-slate-200 flex flex-col">
+            <div class="flex justify-between items-center">
+                <h3 class="text-lg font-semibold text-slate-700">Notas Rápidas</h3>
+                <a href="#" data-view="notas-lista" class="nav-link text-sm font-semibold text-violet-600 hover:text-violet-800">Ver todas</a>
+            </div>
+            <div id="dashboard-notas-container" class="mt-4 space-y-3 flex-grow max-h-80 overflow-y-auto">
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,31 @@
+<div id="proveedores-lista-view" class="hidden">
+    <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+        <div>
+            <h1 class="text-3xl font-bold text-slate-800">Lista de Proveedores</h1>
+            <p class="text-slate-500 mt-1">Administra tus contactos de proveedores.</p>
+        </div>
+        <button data-view="proveedores-agregar" class="nav-link flex items-center bg-violet-600 hover:bg-violet-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500 transition-colors duration-200">
+            <i data-lucide="plus" class="h-5 w-5 mr-2"></i> 
+            <span>Añadir Proveedor</span>
+        </button>
+    </div>
+    <div class="mb-4">
+        <input type="text" id="proveedor-search" placeholder="Buscar proveedor por nombre..." class="form-input w-full md:w-1/3 mt-0">
+    </div>
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200">
+        <div class="overflow-x-auto">
+            <table class="min-w-full">
+                <thead class="bg-slate-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Nombre</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Tipo de Productos</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Email</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Teléfono</th>
+                        <th class="px-6 py-3 text-right text-xs font-medium text-slate-500 uppercase tracking-wider">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-proveedores" class="bg-white divide-y divide-slate-100"></tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -8,6 +8,11 @@ from datetime import datetime
 app = Flask(__name__)
 CORS(app)
 
+# --- Ruta principal que renderiza nuestra plantilla única ---
+@app.route('/')
+def index():
+    return render_template('index.html')
+
 # --- Funciones de Validación ---
 def es_email_valido(email):
     if not email: return True
@@ -18,11 +23,6 @@ def es_telefono_valido(telefono):
     if not telefono: return True
     numeros = re.sub(r'[^0-9]', '', telefono)
     return len(numeros) >= 6
-
-# --- Ruta principal ---
-@app.route('/')
-def index():
-    return render_template('index.html')
 
 # --- Funciones de la Base de Datos ---
 def conectar_db():

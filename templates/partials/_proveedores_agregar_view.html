@@ -1,0 +1,45 @@
+<div id="proveedores-agregar-view" class="hidden">
+    <h1 id="proveedor-form-title" class="text-3xl font-bold text-slate-800 mb-2">Añadir Proveedor</h1>
+    <p class="text-slate-500 mb-6">Completa la información para añadir o editar un proveedor.</p>
+
+    <div class="bg-white p-8 rounded-2xl shadow-md border border-slate-200">
+        <form id="formulario-proveedor" novalidate>
+            <input type="hidden" id="proveedor-id">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label for="proveedor-nombre" class="block text-sm font-medium text-slate-700">Nombre del Proveedor <span class="text-red-500">*</span></label>
+                    <input type="text" id="proveedor-nombre" class="form-input" required>
+                </div>
+                <div>
+                    <label for="proveedor-email" class="block text-sm font-medium text-slate-700">Email</label>
+                    <input type="email" id="proveedor-email" placeholder="ejemplo@correo.com" class="form-input">
+                </div>
+                <div>
+                    <label for="proveedor-tipo-productos" class="block text-sm font-medium text-slate-700">Tipo de Productos</label>
+                    <input type="text" id="proveedor-tipo-productos" placeholder="Ej: Electrónica, Ropa, etc." class="form-input">
+                </div>
+                <div>
+                    <label for="proveedor-telefono" class="block text-sm font-medium text-slate-700">Teléfono</label>
+                    <input type="tel" id="proveedor-telefono" class="form-input">
+                </div>
+                <div>
+                    <label for="proveedor-calidad" class="block text-sm font-medium text-slate-700">Calidad Percibida</label>
+                    <select id="proveedor-calidad" class="form-input">
+                        <option value="">No especificada</option>
+                        <option value="Económica">Económica</option>
+                        <option value="Estándar">Estándar</option>
+                        <option value="Premium">Premium</option>
+                    </select>
+                </div>
+                <div class="md:col-span-2">
+                    <label for="proveedor-notas" class="block text-sm font-medium text-slate-700">Notas Adicionales</label>
+                    <textarea id="proveedor-notas" rows="3" class="form-input" placeholder="Información de contacto, días de entrega, etc."></textarea>
+                </div>
+            </div>
+            <div class="flex items-center justify-end gap-4 mt-6">
+                <button type="button" id="btn-cancelar-proveedor" class="py-2 px-5 border border-slate-300 rounded-lg shadow-sm text-sm font-medium text-slate-700 bg-white hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500">Cancelar</button>
+                <button type="submit" id="btn-submit-proveedor" class="py-2 px-5 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-violet-600 hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500">Añadir Proveedor</button>
+            </div>
+        </form>
+    </div>
+</div>

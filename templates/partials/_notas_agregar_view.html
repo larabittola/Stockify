@@ -1,0 +1,52 @@
+<div id="notas-agregar-view" class="hidden">
+    <h1 id="nota-form-title" class="text-3xl font-bold text-slate-800 mb-2">Crear Nueva Nota</h1>
+    <p class="text-slate-500 mb-6">Añade un nuevo recordatorio o idea.</p>
+    <div class="bg-white p-8 rounded-2xl shadow-md border border-slate-200">
+        <form id="formulario-nota" novalidate>
+            <input type="hidden" id="nota-id">
+            <div class="space-y-6">
+                <div>
+                    <label for="nota-titulo" class="block text-sm font-medium text-slate-700">Título <span class="text-red-500">*</span></label>
+                    <input type="text" id="nota-titulo" class="form-input" required>
+                </div>
+                <div>
+                    <label for="nota-contenido" class="block text-sm font-medium text-slate-700">Contenido <span class="text-red-500">*</span></label>
+                    <textarea id="nota-contenido" rows="6" class="form-input" required></textarea>
+                </div>
+                <div>
+                    <label for="nota-etiquetas" class="block text-sm font-medium text-slate-700">Etiquetas</label>
+                    <input type="text" id="nota-etiquetas" class="form-input" placeholder="Ej: urgente, pedido, clienteA">
+                    <p class="mt-1 text-xs text-slate-400">Separa las etiquetas con comas.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-2">Color de la Nota</label>
+                        <div id="nota-colores" class="flex space-x-3">
+                            <button type="button" data-color="yellow" class="h-8 w-8 rounded-full bg-yellow-300 border-2 border-transparent"></button>
+                            <button type="button" data-color="blue" class="h-8 w-8 rounded-full bg-blue-300 border-2 border-transparent"></button>
+                            <button type="button" data-color="green" class="h-8 w-8 rounded-full bg-green-300 border-2 border-transparent"></button>
+                            <button type="button" data-color="red" class="h-8 w-8 rounded-full bg-red-300 border-2 border-transparent"></button>
+                            <button type="button" data-color="gray" class="h-8 w-8 rounded-full bg-slate-300 border-2 border-transparent"></button>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="nota-importancia" class="block text-sm font-medium text-slate-700">Nivel de Importancia</label>
+                        <select id="nota-importancia" class="form-input">
+                            <option value="1">Baja</option>
+                            <option value="2">Media</option>
+                            <option value="3">Alta</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <input id="nota-fijado" type="checkbox" class="h-4 w-4 text-violet-600 border-slate-300 rounded focus:ring-violet-500">
+                    <label for="nota-fijado" class="ml-2 block text-sm text-slate-800">Fijar en el dashboard</label>
+                </div>
+            </div>
+            <div class="flex items-center justify-end gap-4 mt-8">
+                <button type="button" id="btn-cancelar-nota" class="py-2 px-5 border border-slate-300 rounded-lg shadow-sm text-sm font-medium text-slate-700 bg-white hover:bg-slate-50">Cancelar</button>
+                <button type="submit" id="btn-submit-nota" class="py-2 px-5 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-violet-600 hover:bg-violet-700">Guardar Nota</button>
+            </div>
+        </form>
+    </div>
+</div>

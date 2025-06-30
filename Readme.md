@@ -2,9 +2,6 @@
 
 Stockify es una aplicación web full-stack diseñada para simplificar y centralizar la gestión de inventario para PyMEs y emprendedores, transformando datos en decisiones estratégicas.
 
-![Stockify Screenshot](https://i.imgur.com/k2e4BAn.png)
-*(Consejo: Reemplazá el enlace de la imagen de arriba con una captura de pantalla de tu propia aplicación. Podés arrastrar y soltar una imagen directamente en el editor de GitHub para subirla).*
-
 ---
 
 ## 📋 Tabla de Contenidos
@@ -138,6 +135,3 @@ Distribuido bajo la Licencia MIT. Ver `LICENSE.txt` para más información.
 
 ## 👤 Contacto
 
-[Tu Nombre] - [tu_email@ejemplo.com](mailto:tu_email@ejemplo.com)
-
-Link del Proyecto: [https://github.com/tu_usuario/tu_repositorio](https://github.com/tu_usuario/tu_repositorio)

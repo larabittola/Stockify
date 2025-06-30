@@ -124,8 +124,6 @@ Desde ahí, podrás navegar por todas las secciones de la aplicación.
 
 El proyecto tiene un gran potencial para crecer. Algunas de las funcionalidades planeadas son:
 
-* **Implementación de Autenticación:** Sistema de registro y login de usuarios.
-* **Roles y Permisos:** Distintos niveles de acceso (Administrador, Empleado).
 * **Desarrollo de Módulos Faltantes:** Activar y construir las secciones de "Gastos" y "Facturación".
 * **Notificaciones Avanzadas:** Alertas por email para notificar sobre bajo stock.
 * **Exportación de Datos:** Funcionalidad para exportar listas de productos o reportes a PDF o CSV.
